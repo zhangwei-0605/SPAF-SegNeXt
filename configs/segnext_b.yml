@@ -1,0 +1,58 @@
+
+mode: "train"
+run_name: ""
+run_dir: "./runs/"
+comment: ""
+
+
+dataset: {
+  name: "",
+  train_dirs: [ "/root/autodl-tmp/Project/rs-segment-pytorch-main/dataset_root/Sugarcane_2400/train" ],
+  val_dirs: [ "/root/autodl-tmp/Project/rs-segment-pytorch-main/dataset_root/Sugarcane_2400/val" ],
+  test_dirs: [ "/root/autodl-tmp/Project/rs-segment-pytorch-main/dataset_root/Sugarcane_2400/test" ],
+  cls_info: {
+    background: 0,
+    Sugarcane: 1,
+  },
+  ignore_index: 255,
+}
+
+network: {
+  type: "custom",
+  arch: "segnext_b",
+  encoder: "hrnet_w18",
+  in_size: 512,
+  in_channel: 3,
+  out_channel: 2,
+  pretrained: ""
+}
+
+optimizer: {
+  type: "AdamW",
+  lr: 0.0001,
+
+  weight_decay: 0.01,
+}
+
+train: {
+  epochs: 100,
+  batch_size: 8,
+  smoothing: 0.1,
+  save_inter: -1,
+  plot: true
+}
+
+# 推理配置
+infer: {
+  ckpt_name: " ",
+  in_dir: "/root/autodl-tmp/Project/rs-segment-pytorch-main/dataset_root/Sugarcane_2400/test",
+  out_dir: "/root/autodl-tmp/Project/rs-segment-pytorch-main/1_SugarPriorAM/0_infer_result",
+  l1_win_sz: 2816,
+  l1_overlap: 512,
+  l2_win_sz: 512,
+  l2_overlap: 128,
+  batch_size: 1,
+  tta: false,
+  draw: true,
+  evaluate: false
+}
